@@ -1,6 +1,11 @@
 #' Install all DD packages
 #'
-#' @param DeclareDesign
+#' @param DeclareDesign branch or tag
+#' @param shiny branch or tag
+#' @param randomizr branch or tag
+#' @param fabricatr branch or tag
+#' @param estimatr  branch or tag
+#'
 
 dd_install_github <- function(DeclareDesign="master",
                               shiny="master",
@@ -16,14 +21,18 @@ dd_install_github <- function(DeclareDesign="master",
   devtools::install_github("DeclareDesign/shiny", ref=shiny)
 }
 
+#' Make dependency plot
+#'
+#' @param fields which fields of the description to use
+#'
+#' @export
 
-
-plot_deps <- function(){
+plot_deps <- function(fields=c('Depends', 'Imports', 'LinkingTo', 'Suggests')){
   pkgs <- c("DDshiny", "DeclareDesign", "estimatr", "randomizr", "fabricatr")
   deps <- list()
 
   for(pkg in pkgs){
-    desc <- packageDescription(pkg, fields=c('Depends', 'Imports', 'LinkingTo', 'Suggests'))
+    desc <- packageDescription(pkg, fields=fields)
     desc <- Filter(is.character, desc)
     parsed <- lapply(desc, devtools::parse_deps)
     parsed <- lapply(parsed, "[[", "name")
