@@ -1,0 +1,10 @@
+Package: DDtools
+Type: Package
+Title: Tools for DeclareDesign Devs
+Version: 0.1.0
+Author: Neal
+Maintainer: Neal <nfultz@gmail.com>
+Description: Tools for DeclareDesign devolopers, such as installing dev versions of all packages, etc.
+License: Public Domain
+Encoding: UTF-8
+LazyData: true
