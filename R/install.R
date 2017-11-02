@@ -6,14 +6,15 @@
 #' @param fabricatr branch or tag
 #' @param estimatr  branch or tag
 #'
-
+#' @export
+#'
 dd_install_github <- function(DeclareDesign="master",
                               shiny="master",
                               randomizr="master",
                               fabricatr="master",
                               estimatr="master")
 {
-  stopifnot(requireNamespace("devtools", quietly = TRUE))
+  stopifnot(requireNamespace("devtools"))
   devtools::install_github("DeclareDesign/estimatr", ref=estimatr)
   devtools::install_github("DeclareDesign/fabricatr", ref=fabricatr)
   devtools::install_github("DeclareDesign/randomizr", ref=randomizr)
@@ -28,6 +29,10 @@ dd_install_github <- function(DeclareDesign="master",
 #' @export
 
 plot_deps <- function(fields=c('Depends', 'Imports', 'LinkingTo', 'Suggests')){
+  stopifnot(requireNamespace("devtools"))
+  stopifnot(requireNamespace("igraph"))
+
+
   pkgs <- c("DDshiny", "DeclareDesign", "estimatr", "randomizr", "fabricatr")
   deps <- list()
 
@@ -41,3 +46,16 @@ plot_deps <- function(fields=c('Depends', 'Imports', 'LinkingTo', 'Suggests')){
   edges <- do.call(rbind, mapply(cbind, names(deps), deps))
   plot(igraph::graph_from_edgelist(edges))
 }
+
+#' Enable parallel make
+#'
+#' This enables building with 8 cores by setting \code{MAKE=make -j8}
+#'
+#' @param Makevar the Makevar file to update
+#'
+#' @export
+enable_parallel_make <- function(Makevar=file.path("~", ".R", "Makevars")){
+  cat('MAKE=make -j8', file=Makevar, append=TRUE)
+}
+
+
