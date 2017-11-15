@@ -48,7 +48,9 @@ build_library_cache <- function(
 
   for(i in 1:nrow(combos)) {
     message(i," of ", nrow(combos), "\n")
-    d <- do.call(declare_and_diagnose_memo, combos[i,,drop=FALSE])
+    try(
+      d <- do.call(declare_and_diagnose_memo, combos[i,,drop=FALSE])
+    )
     # diagnose_memo()
 
   }
