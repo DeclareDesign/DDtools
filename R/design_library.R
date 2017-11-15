@@ -31,6 +31,7 @@ build_library_cache <- function(
 
   declare_and_diagnose_memo <- memoise(
     function(...){
+      message("cache miss")
       dec <- template_fun(...)
       diag <- diagnose_design(dec)
       code <- deparse(pryr::substitute_q(body(template_fun), list(...)))
