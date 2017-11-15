@@ -3,7 +3,7 @@
 #' @param topic the vignette topic
 #' @param file to save the Rdata to
 #' @param cache_loc to save the cache data to
-#'
+#' @export
 build_library_cache <- function(
   topic,
   file=file.path("~/cache", paste0(topic, ".Rdata")),
