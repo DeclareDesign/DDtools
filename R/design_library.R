@@ -40,6 +40,24 @@ build_library_cache <- function(
     },
     cache = cache_filesystem(cache_loc))
 
+  designer <- function(...) {
+    call <- match.call()
+    call[[1]] <- quote(declare_and_diagnose_memo)
+    d <- eval(call)
+    # d <- declare_and_diagnose_memo(N=N, beta_A=beta_A, beta_B=beta_B, gamma_AB=gamma_AB)
+    structure(d[[1]], diagnosis=d[[2]], code=d[[3]])
+  }
+  formals(designer) <- formals(template_fun)
+
+  diagnoser <- function(design, ...) {
+
+    attr(design, "diagnosis")
+
+  }
+
+  message("writing to ", file)
+  save(declare_and_diagnose_memo, designer, diagnoser, template_fun, topic, file=file)
+
 
   v <- c(lapply(formals(template_fun), eval), stringsAsFactors=FALSE)
 
@@ -56,22 +74,7 @@ build_library_cache <- function(
 
   }
 
-  designer <- function(...) {
-    call <- match.call()
-    call[[1]] <- quote(declare_and_diagnose_memo)
-    d <- eval(call)
-    # d <- declare_and_diagnose_memo(N=N, beta_A=beta_A, beta_B=beta_B, gamma_AB=gamma_AB)
-    structure(d[[1]], diagnosis=d[[2]], code=d[[3]])
-  }
-  formals(designer) <- formals(template_fun)
 
-  diagnoser <- function(design, ...) {
-
-    attr(design, "diagnosis")
-
-  }
-
-  save(declare_and_diagnose_memo, designer, diagnoser, template_fun, file=file)
 
 
 }
