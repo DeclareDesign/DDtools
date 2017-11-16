@@ -47,15 +47,18 @@ plot_deps <- function(fields=c('Depends', 'Imports', 'LinkingTo', 'Suggests')){
   plot(igraph::graph_from_edgelist(edges))
 }
 
-#' Enable parallel make
-#'
-#' This enables building with 8 cores by setting \code{MAKE=make -j8}
-#'
-#' @param Makevar the Makevar file to update
+#' Run builder/inspector combo
 #'
 #' @export
-enable_parallel_make <- function(Makevar=file.path("~", ".R", "Makevars")){
-  cat('MAKE=make -j8', file=Makevar, append=TRUE)
+#'
+runShiny <- function() {
+  pid1 <- system(" R -e 'shiny::runApp(DDshiny::DDbuilder, host=\"0.0.0.0\", port=8001, launch.browser=FALSE)' >/tmp/builder.log 2>&1 &  echo  $!", intern=TRUE)
+  pid2 <- system(" R -e 'shiny::runApp(DDshiny::DDinspector, host=\"0.0.0.0\", port=8000, launch.browser=FALSE)' >/tmp/inspector.log 2>&1 &  echo  $!", intern=TRUE)
+
+  tryCatch(  while(TRUE) Sys.sleep(.1), interrupt=function(e){
+    message("stopping")
+    tools::pskill(pid1)
+    tools::pskill(pid2)
+  })
+
 }
-
-

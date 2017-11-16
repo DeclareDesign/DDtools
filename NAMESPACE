@@ -2,5 +2,5 @@
 
 export(build_library_cache)
 export(dd_install_github)
-export(enable_parallel_make)
 export(plot_deps)
+export(runShiny)
