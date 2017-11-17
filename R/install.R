@@ -12,14 +12,14 @@ dd_install_github <- function(DeclareDesign="master",
                               shiny="master",
                               randomizr="master",
                               fabricatr="master",
-                              estimatr="master")
+                              estimatr="master", ...)
 {
   stopifnot(requireNamespace("devtools"))
-  devtools::install_github("DeclareDesign/estimatr", ref=estimatr)
-  devtools::install_github("DeclareDesign/fabricatr", ref=fabricatr)
-  devtools::install_github("DeclareDesign/randomizr", ref=randomizr)
-  devtools::install_github("DeclareDesign/DeclareDesign", ref=DeclareDesign)
-  devtools::install_github("DeclareDesign/shiny", ref=shiny)
+  devtools::install_github("DeclareDesign/estimatr", ref=estimatr, ...)
+  devtools::install_github("DeclareDesign/fabricatr", ref=fabricatr, ...)
+  devtools::install_github("DeclareDesign/randomizr", ref=randomizr, ...)
+  devtools::install_github("DeclareDesign/DeclareDesign", ref=DeclareDesign, ...)
+  devtools::install_github("DeclareDesign/shiny", ref=shiny, ...)
 }
 
 #' Make dependency plot
