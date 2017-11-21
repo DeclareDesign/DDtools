@@ -36,6 +36,8 @@ build_library_cache <- function(
       diag <- diagnose_design(dec)
       code <- deparse(pryr::substitute_q(body(template_fun), list(...)))
       code <- paste(code[grep('match.arg|as.numeric', code, invert = TRUE)], collapse='\n')
+      code <- gsub("[{]\n|\n[}]", "", code) # remove surrounding curly
+
       list(dec, diag, code)
     },
     cache = cache_filesystem(cache_loc))
