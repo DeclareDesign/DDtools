@@ -50,6 +50,7 @@ build_library_cache <- function(
     structure(d[[1]], diagnosis=d[[2]], code=d[[3]])
   }
   formals(designer) <- formals(template_fun)
+  attributes(designer) <- attributes(template_fun)
 
   diagnoser <- function(design, ...) {
 
