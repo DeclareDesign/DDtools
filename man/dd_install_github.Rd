@@ -5,7 +5,7 @@
 \title{Install all DD packages}
 \usage{
 dd_install_github(DeclareDesign = "master", shiny = "master",
-  randomizr = "master", fabricatr = "master", estimatr = "master")
+  randomizr = "master", fabricatr = "master", estimatr = "master", ...)
 }
 \arguments{
 \item{DeclareDesign}{branch or tag}
