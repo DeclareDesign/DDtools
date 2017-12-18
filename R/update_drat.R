@@ -6,8 +6,9 @@
 #' @export
 update_drat <- function() {
 
-  requireNamespace("git2r") || {install.packages("git2r", repos="https://cloud.r-project.org/"); requireNamespace("git2r")}
-  requireNamespace("drat")  || {install.packages("drat",  repos="https://cloud.r-project.org/"); requireNamespace("drat")}
+  # git2r needs to be binary, but drat can install from source easily since it doesn't need any compilation
+  requireNamespace("git2r") || {install.packages("git2r", repos="https://cloud.r-project.org/", type = .Platform$pkgType); requireNamespace("git2r")}
+  requireNamespace("drat")  || {install.packages("drat",  repos="https://cloud.r-project.org/", type = "source"); requireNamespace("drat")}
 
   m <- tempfile()
   url <- "https://github.com/DeclareDesign/declaredesign.github.io.git"
@@ -17,9 +18,10 @@ update_drat <- function() {
   git2r::config(repo=repo, user.name="DeclareDesign Travis", user.email="team@declaredesign.org", push.default="simple")
 
   build <- dir(
-    switch(.Platform$OS.type, "windows"='.', '..'),  # Work around - appveyor uses R CMD INSTALL --build, linux/mac use devtools::build
-    pattern="[.](zip|tgz|tar[.]gz)$",
+    path=switch(.Platform$OS.type, "windows"='.', '..'),  # Work around - appveyor uses R CMD INSTALL --build, linux/mac use devtools::build
+    pattern=switch(.Platform$OS.type, "windows"="[.]zip$", "[.](tgz|tar[.]gz)$"),
     full.names = TRUE)
+
 
   if(length(build) == 0){
     message("No built objects found for drat")
