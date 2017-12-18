@@ -11,10 +11,10 @@ update_drat <- function() {
 
   m <- tempfile()
   url <- sprintf("https://%s@github.com/DeclareDesign/declaredesign.github.io.git", Sys.getenv("GH_TOKEN"))
-  git2r::clone(url, m)
+  repo <- git2r::clone(url, m)
 
 
-  git2r::config(repo=m, user.name="DeclareDesign Travis", user.email="team@declaredesign.org", push.default="simple")
+  git2r::config(repo=repo, user.name="DeclareDesign Travis", user.email="team@declaredesign.org", push.default="simple")
 
   build <- dir(
     switch(.Platform$OS.type, "windows"='.', '..'),  # Work around - appveyor uses R CMD INSTALL --build, linux/mac use devtools::build
