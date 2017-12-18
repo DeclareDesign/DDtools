@@ -6,8 +6,8 @@
 #' @export
 update_drat <- function() {
 
-  requireNamespace("git2r") || {install.packages("git2r"); requireNamespace("git2r")}
-  requireNamespace("drat")  || {install.packages("drat"); requireNamespace("drat")}
+  requireNamespace("git2r") || {install.packages("git2r", repos="https://cloud.r-project.org/"); requireNamespace("git2r")}
+  requireNamespace("drat")  || {install.packages("drat",  repos="https://cloud.r-project.org/"); requireNamespace("drat")}
 
   m <- tempfile()
   url <- sprintf("https://%s@github.com/DeclareDesign/declaredesign.github.io.git", Sys.getenv("GH_TOKEN"))
