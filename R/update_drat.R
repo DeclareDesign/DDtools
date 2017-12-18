@@ -10,7 +10,7 @@ update_drat <- function() {
   requireNamespace("drat")  || {install.packages("drat",  repos="https://cloud.r-project.org/"); requireNamespace("drat")}
 
   m <- tempfile()
-  url <- sprintf("https://%s@github.com/DeclareDesign/declaredesign.github.io.git", Sys.getenv("GH_TOKEN"))
+  url <- "https://github.com/DeclareDesign/declaredesign.github.io.git"
   repo <- git2r::clone(url, m)
 
 
@@ -37,4 +37,5 @@ update_drat <- function() {
 
   options(dratRepo=m, dratBranch="master")
   drat::insertPackage(build, commit=msg)
+  git2r::push(repo, credentials=git2r::cred_token("GH_TOKEN")) # push is commented out on drat 1.4 for git2r
 }
