@@ -39,5 +39,6 @@ update_drat <- function() {
 
   options(dratRepo=m, dratBranch="master")
   drat::insertPackage(build, commit=msg)
+  message("Pushing...")
   git2r::push(repo, credentials=git2r::cred_token("GH_TOKEN")) # push is commented out on drat 1.4 for git2r
 }
