@@ -8,7 +8,11 @@ update_drat <- function() {
 
   # git2r needs to be binary, but drat can install from source easily since it doesn't need any compilation
   requireNamespace("git2r") || {install.packages("git2r", repos="https://cloud.r-project.org/", type = .Platform$pkgType); requireNamespace("git2r")}
-  requireNamespace("drat")  || {install.packages("drat",  repos="https://cloud.r-project.org/", type = "source"); requireNamespace("drat")}
+  requireNamespace("drat")  || {
+    #install.packages("drat",  repos="https://cloud.r-project.org/", type = "source"); 
+    remotes::install_github("nfultz/drat")
+    requireNamespace("drat")
+  }
 
   m <- tempfile()
   url <- "https://github.com/DeclareDesign/declaredesign.github.io.git"
