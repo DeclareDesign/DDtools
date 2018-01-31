@@ -7,12 +7,8 @@
 update_drat <- function() {
 
   # git2r needs to be binary, but drat can install from source easily since it doesn't need any compilation
-  requireNamespace("git2r") || {install.packages("git2r", repos="https://cloud.r-project.org/", type = .Platform$pkgType); requireNamespace("git2r")}
-  requireNamespace("drat")  || {
-    #install.packages("drat",  repos="https://cloud.r-project.org/", type = "source"); 
-    remotes::install_github("nfultz/drat")
-    requireNamespace("drat")
-  }
+  load_instally("ropensci/git2r", from="cran")
+  load_instally("eddelbuettel/drat")
 
   m <- tempfile()
   url <- "https://github.com/DeclareDesign/declaredesign.github.io.git"
@@ -36,10 +32,10 @@ update_drat <- function() {
     build <- build[1]
   }
 
-  COMMIT=Sys.getenv("TRAVIS_COMMIT", Sys.getenv("APPVEYOR_REPO_COMMIT", "(Unknown commit)"))
+  COMMIT=substr(Sys.getenv("TRAVIS_COMMIT", Sys.getenv("APPVEYOR_REPO_COMMIT", "(Unknown commit)")), 1, 16)
   PKG_REPO=basename(build)
 
-  msg <- sprintf("Travis update %s build %s (%s %s)", PKG_REPO, COMMIT, .Platform$OS.type, R.version.string)
+  msg <- sprintf("Travis update %s build %s (%s %s)", PKG_REPO, COMMIT, R.version$os, R.version.string)
 
   options(dratRepo=m, dratBranch="master")
   drat::insertPackage(build, commit=msg)
