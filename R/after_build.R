@@ -20,7 +20,7 @@ after_build <- function() {
   if(Sys.getenv("TRAVIS_PULL_REQUEST") == "false" && Sys.getenv("TRAVIS_BRANCH") == "master") {
     message("Updating drat via travis")
     DDtools::update_drat()
-  } else if (Sys.getenv("APPVEYOR_PULL_REQUEST_NUMBER") == "" && Sys.getenv("APPVEYOR_REPO_BRANCH") == master) {
+  } else if (Sys.getenv("APPVEYOR_PULL_REQUEST_NUMBER") == "" && Sys.getenv("APPVEYOR_REPO_BRANCH") == "master") {
     message("Updating drat via appveyor")
     DDtools::update_drat()
   }

@@ -32,7 +32,7 @@ update_drat <- function() {
     build <- build[1]
   }
 
-  COMMIT=substr(Sys.getenv("TRAVIS_COMMIT", Sys.getenv("APPVEYOR_REPO_COMMIT", "(Unknown commit)")), 1, 16)
+  COMMIT=substr(Sys.getenv("TRAVIS_COMMIT", Sys.getenv("APPVEYOR_REPO_COMMIT", "!Unknown")), 1, 16)
   PKG_REPO=basename(build)
 
   msg <- sprintf("Travis update %s build %s (%s %s)", PKG_REPO, COMMIT, R.version$os, R.version.string)
