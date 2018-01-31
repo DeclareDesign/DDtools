@@ -1,4 +1,5 @@
 
+#' @export
 after_build <- function() {
   load_instally("hadley/devtools")
 
@@ -25,6 +26,8 @@ after_build <- function() {
   }
 
 }
+
+class(after_build) <- c("paren_hack", "function")
 
 load_instally <- function(repo, pkg=basename(repo), from="github"){
   if(!requireNamespace(pkg)){
