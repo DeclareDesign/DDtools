@@ -32,10 +32,10 @@ update_drat <- function() {
     build <- build[1]
   }
 
-  COMMIT=substr(Sys.getenv("TRAVIS_COMMIT", Sys.getenv("APPVEYOR_REPO_COMMIT", "!Unknown")), 1, 16)
+  COMMIT=substr(Sys.getenv("TRAVIS_COMMIT", Sys.getenv("APPVEYOR_REPO_COMMIT", "!Unknown")), 1, 8)
   PKG_REPO=basename(build)
 
-  msg <- sprintf("Travis update %s build %s (%s %s)", PKG_REPO, COMMIT, R.version$os, R.version.string)
+  msg <- sprintf("Travis %s:%s (%s %s)", COMMIT, PKG_REPO, R.version$os, getRversion())
 
   options(dratRepo=m, dratBranch="master")
   drat::insertPackage(build, commit=msg)
