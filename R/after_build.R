@@ -17,7 +17,7 @@ after_build <- function() {
     devtools::build(binary = TRUE, args = c('--preclean'))
   }
 
-  if(Sys.getenv("TRAVIS_PULL_REQUEST") == "false" && sys.getenv("TRAVIS_BRANCH") == "master") {
+  if(Sys.getenv("TRAVIS_PULL_REQUEST") == "false" && Sys.getenv("TRAVIS_BRANCH") == "master") {
     message("Updating drat via travis")
     DDtools::update_drat()
   } else if (Sys.getenv("APPVEYOR_PULL_REQUEST_NUMBER") == "" && Sys.getenv("APPVEYOR_REPO_BRANCH") == master) {
