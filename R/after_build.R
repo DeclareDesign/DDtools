@@ -6,15 +6,26 @@ after_build <- function() {
   os <- Sys.getenv("TRAVIS_OS_NAME")
 
   if(os == "linux") {
+    
     load_instally("r-lib/covr")
     NOT_CRAN <- Sys.getenv("NOT_CRAN")
     Sys.setenv(NOT_CRAN="false")
-    covr::coveralls()
+    message("*** Running coveralls...\n\n")
+    covr::coveralls(quiet=FALSE)
     Sys.setenv(NOT_CRAN=NOT_CRAN)
 
-    devtools::build()
-  } else if (os == "mac") {
-    devtools::build(binary = TRUE, args = c('--preclean'))
+    message("*** Source build...\n\n")
+    time <- system.time(
+      file <- devtools::build()
+    )
+    message("*** Built ", file, " in ", time["elapsed"], "\n")
+    
+  } else if (os == "osx") {
+    message("*** Mac build...\n\n")
+    time <- system.time(
+      file <- devtools::build(binary = TRUE, args = c('--preclean'))
+    )
+    message("*** Built ", file, " in ", time["elapsed"], "\n")
   }
 
   if(Sys.getenv("TRAVIS_PULL_REQUEST") == "false" && Sys.getenv("TRAVIS_BRANCH") == "master") {
