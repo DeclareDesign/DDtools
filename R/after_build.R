@@ -1,13 +1,13 @@
 
 #' @export
 after_build <- function() {
-  load_instally("hadley/devtools")
 
   os <- Sys.getenv("TRAVIS_OS_NAME")
 
   if(os == "linux") {
-    
+    load_instally("hadley/devtools")  
     load_instally("r-lib/covr")
+    
     NOT_CRAN <- Sys.getenv("NOT_CRAN")
     Sys.setenv(NOT_CRAN="false")
     message("*** Running coveralls...\n\n")
@@ -21,6 +21,8 @@ after_build <- function() {
     message("*** Built ", file, " in ", time["elapsed"], "\n")
     
   } else if (os == "osx") {
+    load_instally("hadley/devtools")
+
     message("*** Mac build...\n\n")
     time <- system.time(
       file <- devtools::build(binary = TRUE, args = c('--preclean'))
