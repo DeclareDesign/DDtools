@@ -29,12 +29,14 @@ after_build <- function() {
     )
     message("*** Built ", file, " in ", time["elapsed"], "\n")
   }
-
+  
   if(Sys.getenv("TRAVIS_PULL_REQUEST") == "false" && Sys.getenv("TRAVIS_BRANCH") == "master") {
     message("Updating drat via travis")
+    Sys.sleep(10*rexp(1, 1/10))
     DDtools::update_drat()
   } else if (Sys.getenv("APPVEYOR_PULL_REQUEST_NUMBER") == "" && Sys.getenv("APPVEYOR_REPO_BRANCH") == "master") {
     message("Updating drat via appveyor")
+    Sys.sleep(10*rexp(1, 1/10))
     DDtools::update_drat()
   }
 
