@@ -47,7 +47,7 @@ class(after_build) <- c("paren_hack", "function")
 load_instally <- function(repo, pkg=basename(repo), from="github"){
   if(!requireNamespace(pkg)){
     switch(from,
-      github=remotes::install_github(repo),
+      github=devtools::install_github(repo),
       cran=install.packages(pkg, repos="https://cloud.r-project.org/", type = .Platform$pkgType)
     )
     if(!requireNamespace(pkg)) warning(repo, " installation or loading failed !?")
