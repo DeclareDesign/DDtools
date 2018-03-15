@@ -28,6 +28,9 @@ after_build <- function() {
       file <- devtools::build(binary = TRUE, args = c('--preclean'))
     )
     message("*** Built ", file, " in ", time["elapsed"], "\n")
+  } else {
+    message("*** We are probably (?) on appveyor windows")
+    load_instally("devtools", from="cran")
   }
   
   if(Sys.getenv("TRAVIS_PULL_REQUEST") == "false" && Sys.getenv("TRAVIS_BRANCH") == "master") {
